@@ -7,44 +7,42 @@
 import random
 
 def populateList(mainList, sizeOfInnerLists):
-    for list in mainList:
-        while list.__len__() != sizeOfInnerLists:
-            number=random.randint(0, sizeOfInnerLists*100)
-            if number not in list:
-                list.append(number)    
-        list.sort()
+    for sublist in mainList:
+        while len(sublist) != sizeOfInnerLists:
+            number = random.randint(0, sizeOfInnerLists)
+            if number not in sublist:
+                sublist.append(number)    
+        sublist.sort()
 
 def showContent(mainList):
-    for i in range(mainList.__len__()):
-        print(f'Exibindo lista {i+1}')
-        for element in mainList[i]:
+    for i, sublist in enumerate(mainList, start=1):
+        print(f'Exibindo lista {i}')
+        for element in sublist:
             print(element)
-            
-def showUnionList(mainList, unionList):
-    for i in mainList:
-        for j in i:
-            if j not in unionList:
-                unionList.append(j)
 
-    unionList.sort()
-    print(f'Exibindo a lista de união')
-    for i in unionList:
-        print(i)
+def showUnionList(mainList):
+    unionSet = set()
+    for sublist in mainList:
+        unionSet.update(sublist)
+    unionList = sorted(unionSet)
+    print('Exibindo a lista de união')
+    for element in unionList:
+        print(element)
 
-def showUniqueList(mainList, uniqueList):
-    for list in mainList:
-        for element in list:
-            isUnique = True
-            for otherList in mainList:
-                if list != otherList and element in otherList:
-                    isUnique = False
-                    break
-            if isUnique:
-                uniqueList.append(element)
-    uniqueList.sort()
-    print(f'Exibindo a lista de únicos')
-    for i in uniqueList:
-        print(i)
+def showUniqueList(mainList):
+    allNumbers = set()
+    repeatedNumbers = set()
+    for sublist in mainList:
+        for number in sublist:
+            if number in allNumbers:
+                repeatedNumbers.add(number)
+            else:
+                allNumbers.add(number)
+    uniqueNumbers = sorted(allNumbers - repeatedNumbers)
+    print('Exibindo a lista de únicos')
+    for element in uniqueNumbers:
+        print(element)
+
 
 sizeOfMainList = int(input("Informe a quantidade de listas: "))  
 sizeOfInnerLists = int(input("Informe a quantidade de elementos em cada lista: "))
@@ -52,9 +50,5 @@ sizeOfInnerLists = int(input("Informe a quantidade de elementos em cada lista: "
 mainList = [[] for _ in range(sizeOfMainList)]
 populateList(mainList, sizeOfInnerLists)
 showContent(mainList)
-
-unionList = []
-showUnionList(mainList, unionList)
-uniqueList = []
-showUniqueList(mainList, uniqueList)
-
+showUnionList(mainList)
+showUniqueList(mainList)
