@@ -7,7 +7,6 @@ public class Util {
 
     public static void popularArquivoNoHash(HashSet<Atomo> tabelaHash, String nomeArquivo) {
         try {
-            // Verifica se o arquivo existe
             FileReader arquivo = new FileReader(nomeArquivo);
             BufferedReader leitor = new BufferedReader(arquivo);
 
